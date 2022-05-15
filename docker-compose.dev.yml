@@ -1,7 +1,6 @@
 services:
   api:
     build: ./
-    container_name: backend
     volumes:
       - ./:/backend
     ports:
@@ -24,6 +23,8 @@ services:
       interval: 1s
   pgadmin:
     image: dpage/pgadmin4
+    volumes:
+      - ./tmp/pgadmin:/var/lib/pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: "${PGADMIN_EMAIL}"
