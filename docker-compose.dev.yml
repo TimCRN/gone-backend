@@ -1,13 +1,14 @@
+version: "3.6"
+
 services:
-  api:
-    build: ./
-    volumes:
-      - ./:/backend
-    ports:
-      - 8080:8080
-    depends_on:
-      db:
-        condition: service_healthy
+#  api:
+#    build: ./
+#    volumes:
+#      - ./:/gone-backend
+#    ports:
+#      - 8080:8080
+#    expose:
+#      - 8080
   db:
     image: postgres
     volumes:
