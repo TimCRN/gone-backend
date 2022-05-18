@@ -1,4 +1,4 @@
-package com.example.models
+package com.example.data.model
 
 import io.ktor.server.auth.*
 import java.io.Serializable
