@@ -8,12 +8,14 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import io.github.cdimascio.dotenv.dotenv
 
 object DatabaseFactory {
-    fun init(driver: String, url: String) {
+    fun init() {
+        val dotenv = dotenv()
         val config = HikariConfig()
-        config.driverClassName = driver
-        config.jdbcUrl = url
+        config.driverClassName = "org.postgresql.Driver"
+        config.jdbcUrl = "jdbc:postgresql://${dotenv["DB_HOST"]}/${dotenv["DB_NAME"]}?user=${dotenv["DB_USER"]}&password=${dotenv["DB_PASSWORD"]}"
         config.maximumPoolSize = 3
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"

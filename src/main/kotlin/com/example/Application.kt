@@ -19,10 +19,7 @@ fun main(args: Array<String>): Unit =
 
 @Suppress("unused") // application.conf references the main function. This annotation prevents the IDE from marking it as unused.
 fun Application.module() {
-    DatabaseFactory.init(
-        environment.config.property("database.driver").getString(),
-        environment.config.property("database.url").getString()
-    )
+    DatabaseFactory.init()
     configureSecurity()
     configureRouting()
 }
