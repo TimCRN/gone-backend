@@ -4,10 +4,12 @@ val logback_version: String by project
 val exposed_version: String by project
 val postgres_version: String by project
 val hikari_version: String by project
+val ktor_swagger_version: String by project
 
 plugins {
     application
     kotlin("jvm") version "1.6.21"
+    kotlin("plugin.serialization") version "1.6.10"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -23,6 +25,7 @@ application {
 repositories {
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -39,4 +42,8 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgres_version")
     implementation("com.zaxxer:HikariCP:$hikari_version")
     implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("com.github.papsign:Ktor-OpenAPI-Generator:-SNAPSHOT")
 }
