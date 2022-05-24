@@ -5,6 +5,7 @@ val exposed_version: String by project
 val postgres_version: String by project
 val hikari_version: String by project
 val ktor_swagger_version: String by project
+val exposed_java_time_version: String by project
 
 plugins {
     application
@@ -39,11 +40,11 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_java_time_version")
     implementation("org.postgresql:postgresql:$postgres_version")
     implementation("com.zaxxer:HikariCP:$hikari_version")
     implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-    implementation("com.github.papsign:Ktor-OpenAPI-Generator:-SNAPSHOT")
 }
