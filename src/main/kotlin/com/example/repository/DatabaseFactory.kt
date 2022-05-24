@@ -1,6 +1,6 @@
 package com.example.repository
 
-import com.example.data.table.UserTable
+import com.example.data.table.*
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +22,17 @@ object DatabaseFactory {
         config.validate()
         Database.connect(HikariDataSource(config))
 
+        // TODO Add migrations
         transaction {
             SchemaUtils.create(UserTable)
+            SchemaUtils.create(TripTable)
+            SchemaUtils.create(TeamUserTable)
+            SchemaUtils.create(TeamTable)
+            SchemaUtils.create(SettingTable)
+            SchemaUtils.create(PremiumTable)
+            SchemaUtils.create(LanguageTable)
+            SchemaUtils.create(GenderTable)
+            SchemaUtils.create(CurrencyTable)
         }
     }
 
