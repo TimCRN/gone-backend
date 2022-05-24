@@ -10,7 +10,8 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
-import java.io.File
+import java.io.FileOutputStream
+import java.util.Base64
 
 fun Application.configureBasicRouting() {
 
@@ -97,25 +98,15 @@ fun Application.configureAuthRouting(
                 } catch (e:Exception) {
                     call.respond(
                         HttpStatusCode.Conflict,
-                        SimpleResponse(false, "A problem occurred"))
+                        SimpleResponse(false, e.message ?: "A problem occurred"))
                 }
             }
         }
     }
 }
 
-fun UploadFile(base64Image: String) {
-    File("/uploads")
-//    multiPartData.forEachPart { part ->
-//        when (part) {
-//            is PartData.FormItem -> {
-//                fileDescription = part.value
-//            }
-//            is PartData.FileItem -> {
-//                fileName = part.originalFileName as String
-//                val fileBytes = part.streamProvider().readBytes()
-//                File("uploads/$fileName").writeBytes(fileBytes)
-//            }
-//        }
-//    }
+private fun UploadFile(base64Image: String) {
+    val data = Base64.getDecoder().decode(base64Image)
+    val stream = FileOutputStream("c:/files/image.jpg")
+    stream.write(data)
 }
