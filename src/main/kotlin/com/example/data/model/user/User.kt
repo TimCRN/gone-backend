@@ -1,4 +1,4 @@
-package com.example.data.model
+package com.example.data.model.user
 
 import io.ktor.server.auth.*
 import kotlinx.serialization.*
@@ -11,12 +11,3 @@ data class User(
     val password: String,
     val profilePicture: String? = null
 ) : Principal
-
-@Serializable
-data class NewUser(
-    val id: Int? = null,
-    val email: String,
-    val username: String,
-    val password: String,
-    val profilePicture: String? = null
-)

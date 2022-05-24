@@ -3,7 +3,7 @@ package com.example.services
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.example.data.model.User
+import com.example.data.model.user.User
 import io.github.cdimascio.dotenv.dotenv
 import io.ktor.util.*
 import javax.crypto.Mac

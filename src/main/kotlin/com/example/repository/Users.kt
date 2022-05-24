@@ -1,12 +1,14 @@
 package com.example.repository
 
-import com.example.data.model.NewUser
-import com.example.data.model.User
+import com.example.data.model.user.NewUser
+import com.example.data.model.user.User
 import com.example.data.table.UserTable
-import com.example.repository.DatabaseFactory.dbQuery
+import com.example.data.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 class UserRepository {
     suspend fun addUser(user: NewUser): User {
@@ -14,7 +16,16 @@ class UserRepository {
             UserTable.insert { ut ->
                 ut[email] = user.email
                 ut[username] = user.username
+                ut[birthday] = user.birthday
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
                 ut[password] = user.password
+                ut[gender] = user.gender
+                ut[country] = user.country
+                ut[premium] = user.premium
+                ut[created] = LocalDateTime.now()
+
             }
         }
         return findByEmail(user.email)!!

@@ -1,4 +1,4 @@
-package com.example.repository
+package com.example.data
 
 import com.example.data.table.*
 import com.zaxxer.hikari.HikariConfig

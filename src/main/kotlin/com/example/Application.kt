@@ -1,7 +1,7 @@
 package com.example
 
 import com.example.plugins.*
-import com.example.repository.DatabaseFactory
+import com.example.data.DatabaseFactory
 import com.example.repository.UserRepository
 import com.example.services.JwtService
 import com.example.services.hash

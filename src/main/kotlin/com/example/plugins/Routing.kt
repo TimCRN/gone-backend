@@ -2,6 +2,11 @@ package com.example.plugins
 
 import com.example.Constants
 import com.example.data.model.*
+import com.example.data.model.request.LoginRequest
+import com.example.data.model.request.RegisterRequest
+import com.example.data.model.response.SimpleResponse
+import com.example.data.model.response.TokenResponse
+import com.example.data.model.user.NewUser
 import com.example.repository.UserRepository
 import com.example.services.JwtService
 import io.ktor.server.routing.*
@@ -40,7 +45,8 @@ fun Application.configureAuthRouting(
                 } catch (e:Exception) {
                     call.respond(
                         HttpStatusCode.BadRequest,
-                        SimpleResponse(false, Constants.INVALID_PARAMETERS))
+                        SimpleResponse(false, Constants.INVALID_PARAMETERS)
+                    )
                     return@post
                 }
                 try {
@@ -49,18 +55,21 @@ fun Application.configureAuthRouting(
                         if(user.password == hash(loginRequest.password)){
                             call.respond(
                                 HttpStatusCode.OK,
-                                TokenResponse(true, jwtService.generateToken(user)))
+                                TokenResponse(true, jwtService.generateToken(user))
+                            )
                         } else {
                             call.respond(
                                 HttpStatusCode.BadRequest,
-                                SimpleResponse(false, "Incorrect password"))
+                                SimpleResponse(false, "Incorrect password")
+                            )
                         }
                     } else {
                         // TODO Probably make this happen either way if the password was incorrect
                         //      to create ambiguity for potential threats
                         call.respond(
                             HttpStatusCode.BadRequest,
-                            SimpleResponse(false, "Email '${loginRequest.email}' does not exist"))
+                            SimpleResponse(false, "Email '${loginRequest.email}' does not exist")
+                        )
                     }
                 } catch(e:Exception) {
                     call.respond(
@@ -75,7 +84,8 @@ fun Application.configureAuthRouting(
                 } catch(e:Exception){
                     call.respond(
                         HttpStatusCode.BadRequest,
-                        SimpleResponse(false, e.message ?: Constants.INVALID_PARAMETERS))
+                        SimpleResponse(false, e.message ?: Constants.INVALID_PARAMETERS)
+                    )
                     return@post
                 }
                 try {
@@ -83,22 +93,30 @@ fun Application.configureAuthRouting(
                         val user = NewUser(
                             email = registerRequest.email,
                             username = registerRequest.username,
-                            password = hash(registerRequest.password))
+                            password = hash(registerRequest.password),
+                            birthday = registerRequest.birthday,
+                            gender = registerRequest.gender,
+                            country = registerRequest.country,
+                            premium = registerRequest.premium,
+                        )
                         if(registerRequest.profilePicture != null) { UploadFile(registerRequest.profilePicture) }
                         val result = userRepo.addUser(user)
                         val token = jwtService.generateToken(result)
                         call.respond(
                             HttpStatusCode.OK,
-                            TokenResponse(true,token))
+                            TokenResponse(true,token)
+                        )
                     } else {
                         call.respond(
                             HttpStatusCode.Conflict,
-                            SimpleResponse(false,"Email is already present in the database"))
+                            SimpleResponse(false,"Email is already present in the database")
+                        )
                     }
                 } catch (e:Exception) {
                     call.respond(
                         HttpStatusCode.Conflict,
-                        SimpleResponse(false, e.message ?: "A problem occurred"))
+                        SimpleResponse(false, e.message ?: "A problem occurred")
+                    )
                 }
             }
         }
