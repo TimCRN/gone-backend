@@ -1,17 +1,14 @@
 package com.example.data.model.user
 
-import com.example.DateSerializer
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
 data class NewUser(
-    val id: Int? = null,
     val email: String,
-    @Serializable(with = DateSerializer::class)
-    val birthday: Date,
+    val birthday: String,
     val username: String,
     val password: String,
+    val tag: Int,
     val gender: Int,
     val country: Int,
     val premium: Int,

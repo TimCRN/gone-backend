@@ -3,7 +3,9 @@ package com.example
 import com.example.plugins.*
 import com.example.data.DatabaseFactory
 import com.example.data.DatabaseSeeder
+import com.example.repository.ActivityRepository
 import com.example.repository.GenderRepository
+import com.example.repository.PremiumRepository
 import com.example.repository.UserRepository
 import com.example.services.JwtService
 import com.example.services.hash
@@ -21,14 +23,20 @@ fun main(args: Array<String>): Unit =
 fun Application.module() {
 
     DatabaseFactory.init()
-    val userRepository = UserRepository()
     val genderRepository = GenderRepository()
+    val premiumRepository = PremiumRepository()
+    val activityRepository = ActivityRepository()
+    val userRepository = UserRepository()
     val jwtService = JwtService()
     val hashFunction = { s:String -> hash(s) }
 
     runBlocking {
-        DatabaseSeeder
-            .seedGenders(genderRepository)
+        DatabaseSeeder.seedDatabase(
+            genderRepository,
+            premiumRepository,
+            activityRepository,
+            userRepository
+        )
     }
 
     if(dotenv()["DEV_MODE"].toBoolean()){
@@ -37,6 +45,6 @@ fun Application.module() {
 
     configureContentNegotiation()
     configureSecurity(userRepository,jwtService)
-    configureBasicRouting()
+    configureBasicRouting(userRepository)
     configureAuthRouting(userRepository,jwtService,hashFunction)
 }

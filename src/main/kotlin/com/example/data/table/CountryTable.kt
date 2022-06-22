@@ -2,10 +2,10 @@ package com.example.data.table
 
 import org.jetbrains.exposed.sql.Table
 
-object LanguageTable: Table() {
+object CountryTable: Table() {
     val id = integer("id").autoIncrement()
-    val language = varchar("language",64).uniqueIndex()
-    val short = varchar("short",3)
+    val name = varchar("name",64)
+    val short = varchar("short",4)
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

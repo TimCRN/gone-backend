@@ -1,21 +1,12 @@
 package com.example.repository
 
-import com.example.data.DatabaseFactory
 import com.example.data.DatabaseFactory.dbQuery
-import com.example.data.model.gender.Gender
 import com.example.data.model.premium.NewPremium
 import com.example.data.model.premium.Premium
-import com.example.data.model.user.NewUser
-import com.example.data.model.user.User
-import com.example.data.table.GenderTable
 import com.example.data.table.PremiumTable
-import com.example.data.table.UserTable
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 class PremiumRepository {
 
@@ -23,9 +14,10 @@ class PremiumRepository {
         val newId: Int = dbQuery {
             PremiumTable.insert { pt ->
                 pt[title] = premium.title
-                pt[short] = premium.short
+                pt[description] = premium.description
+                pt[price] = premium.price
             }
-        } get GenderTable.id
+        } get PremiumTable.id
         return findById(newId)!!
     }
 

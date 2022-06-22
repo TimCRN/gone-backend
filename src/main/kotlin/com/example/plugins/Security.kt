@@ -14,11 +14,18 @@ fun Application.configureSecurity(
         jwt("basic") {
             verifier(jwtService.verifier)
             realm = "basic routes"
-            validate {
-                val payload = it.payload
-                val email = payload.getClaim("email").asString()
-                val user = users.findByEmail(email)
-                user
+            validate { credentials ->
+                val email = credentials.payload.getClaim("email").asString()
+                if (email != "") {
+                    val user = users.getUserByEmail(email)
+                    user?.let {
+                        JWTPrincipal(credentials.payload)
+                    } ?: run {
+                        null
+                    }
+                } else {
+                    null
+                }
             }
         }
     }

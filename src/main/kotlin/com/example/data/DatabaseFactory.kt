@@ -24,6 +24,7 @@ object DatabaseFactory {
 
         // TODO Add migrations
         transaction {
+            SchemaUtils.create(ActivityTable)
             SchemaUtils.create(UserTable)
             SchemaUtils.create(TripTable)
             SchemaUtils.create(TeamUserTable)
@@ -33,6 +34,7 @@ object DatabaseFactory {
             SchemaUtils.create(LanguageTable)
             SchemaUtils.create(GenderTable)
             SchemaUtils.create(CurrencyTable)
+            SchemaUtils.create(CountryTable)
         }
     }
 
