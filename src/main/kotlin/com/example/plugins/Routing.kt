@@ -244,6 +244,11 @@ fun Application.configureBasicRouting(
         get("/"){
             call.respondText("no authentication needed here")
         }
+        authenticate {
+            route("/test") {
+
+            }
+        }
     }
 }
 

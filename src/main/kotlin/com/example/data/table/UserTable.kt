@@ -23,7 +23,8 @@ object UserTable: Table() {
         .references(ActivityTable.id)
     val image = uuid("image")
         .nullable()
-    val created = datetime("created")
+    val created = datetime("created_at")
+    val updated_at = datetime("updated_at")
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 

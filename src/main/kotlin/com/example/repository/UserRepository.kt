@@ -15,7 +15,6 @@ import com.example.data.table.PremiumTable
 import com.example.services.hash
 import io.ktor.http.*
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
